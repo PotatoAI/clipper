@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "clipper"
+version = "0.1.0"
+description = ""
+authors = ["Max Gonzih <gonzih@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+scikit-learn = "^1.2.1"
+transformers = "^4.26.0"
+pillow = "^9.4.0"
+torch = "^1.13.1"
+torchvision = "^0.14.1"
+torchaudio = "^0.13.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
