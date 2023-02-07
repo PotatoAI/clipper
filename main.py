@@ -1,24 +1,21 @@
-from sklearn.metrics.pairwise import cosine_similarity
-from transformers import CLIPProcessor, CLIPModel
 from PIL import Image
+from sentence_transformers import SentenceTransformer, util
 import torch
 
-# Load ViT-B-32 CLIP model
 device = torch.device("mps")
-model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32").to(device)
-processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
+model = SentenceTransformer('clip-ViT-B-32').to(device)
 
 image = Image.open("input.jpg")
 
-image_feature = processor(images=image, return_tensors="pt",
-                          padding=True)['pixel_values']
+image_feature = model.encode(image)
 print(image_feature)
 
-text_feature = processor(text=["a photo of a cat", "a photo of a dog"],
-                         return_tensors="pt",
-                         padding=True)['input_ids']
+text_feature = model.encode([
+    "drawing of a shoe", "a photo of a cat", "a picture of shark like monster",
+    "a photo of shark like monster"
+])
 print(text_feature)
 
 # cosine similarity
-sim = cosine_similarity(image_feature, text_feature)
-print(sim)
+cos_scores = util.cos_sim(image_feature, text_feature)
+print(cos_scores)
